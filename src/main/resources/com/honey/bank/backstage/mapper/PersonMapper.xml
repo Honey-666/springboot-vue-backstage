@@ -14,8 +14,7 @@
     </resultMap>
     <!--    要查询的列，提取出公共的-->
     <sql id="Base_Column_List">
-        id
-        , name,age,profession,hobby,salary,creat_at,update_at
+        id,name,age,profession,hobby,salary,creat_at,update_at
     </sql>
     <!--    条件提取出公共的-->
     <sql id="Example_Where_Clause">

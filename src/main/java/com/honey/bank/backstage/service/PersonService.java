@@ -12,7 +12,7 @@ public class PersonService {
     @Autowired
     private PersonMapper personMapper;
 
-    public List<Person> findAll() {
-        return null;
+    public List<Person> findAll(Integer page, Integer size, Person person) {
+        return personMapper.findAllPage(page, size, person);
     }
 }
