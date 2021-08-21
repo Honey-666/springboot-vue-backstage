@@ -11,4 +11,6 @@ public class Person extends BaseEntity{
     private String profession;
     private String hobby;
     private Double salary;
+
+
 }

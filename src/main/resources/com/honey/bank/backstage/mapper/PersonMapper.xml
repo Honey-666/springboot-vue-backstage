@@ -59,11 +59,11 @@
         where id = #{id}
     </select>
     <!--分页查询-->
-    <select id="findAllPage" resultMap="BaseResultMap">
+    <select id="findAllPage" resultMap="BaseResultMap" parameterType="com.honey.bank.backstage.entity.Person">
         select
         <include refid="Base_Column_List"/>
         from person
-        <include refid="Example_Where_Clause"/>
+       <!-- <include refid="Example_Where_Clause"/>-->
         limit ${size} offset ${(page-1)*size}
     </select>
     <!--添加-->
