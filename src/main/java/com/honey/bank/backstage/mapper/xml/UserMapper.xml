@@ -7,7 +7,7 @@
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="salt" property="salt"/>
-        <result column="creat_at" property="create_at"/>
+        <result column="creat_at" property="creat_at"/>
         <result column="update_at" property="update_at"/>
     </resultMap>
     <!--    要查询的列，提取出公共的-->
@@ -18,27 +18,20 @@
     <!--    条件提取出公共的-->
     <sql id="Example_Where_Clause">
         <where>
-            <if test="id != null">
-                and id = #{id}
+            <if test="user.id != null">
+                and id = #{user.id}
             </if>
 
-            <if test="username != null and username != ''">
-                and username = #{username}
+            <if test="user.username != null and user.username != ''">
+                and username = #{user.username}
             </if>
 
-            <if test="password != null and password != ''">
-                and password = #{password}
+            <if test="user.password != null and user.password != ''">
+                and password = #{user.password}
             </if>
 
-            <if test="salt != null and salt != ''">
-                and salt = #{salt}
-            </if>
-
-            <if test="creat_at != null">
-                and to_days(create_at) = to_days(#{create_at})
-            </if>
-            <if test="update_at != null">
-                and to_days(update_time) = to_days(#{update_at})
+            <if test="user.salt != null and user.salt != ''">
+                and salt = #{user.salt}
             </if>
         </where>
     </sql>
@@ -54,7 +47,7 @@
         select
         <include refid="Base_Column_List"/>
         from user
-        limit ${size} offset ${(page-1)*size}
+        limit #{page},#{size}
     </select>
 
     <insert id="insertEntity" parameterType="com.honey.bank.backstage.entity.User">

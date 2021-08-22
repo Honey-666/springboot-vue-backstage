@@ -12,7 +12,23 @@ public class PersonService {
     @Autowired
     private PersonMapper personMapper;
 
-    public List<Person> findAll(Integer page, Integer size, Person person) {
-        return personMapper.findAllPage(page, size, person);
+    public List<Person> findAll(Integer beginSize, Integer size, Person person) {
+        return personMapper.findAllPage(beginSize, size, person);
+    }
+
+    public Person findOneById(Long id) {
+        return personMapper.selectByPrimaryKey(id);
+    }
+
+    public int save(Person person) {
+        return personMapper.insertEntity(person);
+    }
+
+    public int update(Person person) {
+        return personMapper.updateByPrimaryKey(person);
+    }
+
+    public int delete(Long id) {
+        return personMapper.deleteByPrimaryKey(id);
     }
 }

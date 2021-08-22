@@ -11,7 +11,7 @@ public interface PersonMapper {
 
     Person selectByPrimaryKey(@Param("id") Long id);
 
-    List<Person> findAllPage(@Param("page") Integer page, @Param("size") Integer size, Person person);
+    List<Person> findAllPage(@Param("beginSize") Integer beginSize, @Param("size") Integer size,@Param("person") Person person);
 
     int insertEntity(Person person);
 

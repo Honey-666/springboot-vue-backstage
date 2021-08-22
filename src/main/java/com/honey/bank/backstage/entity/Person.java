@@ -2,6 +2,7 @@ package com.honey.bank.backstage.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+
 @Data
 @Accessors(chain = true)
 public class Person extends BaseEntity{
@@ -11,6 +12,4 @@ public class Person extends BaseEntity{
     private String profession;
     private String hobby;
     private Double salary;
-
-
 }

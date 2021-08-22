@@ -9,7 +9,7 @@
         <result column="profession" property="profession"/>
         <result column="hobby" property="hobby"/>
         <result column="salary" property="salary"/>
-        <result column="creat_at" property="create_at"/>
+        <result column="creat_at" property="creat_at"/>
         <result column="update_at" property="update_at"/>
     </resultMap>
     <!--    要查询的列，提取出公共的-->
@@ -19,35 +19,28 @@
     <!--    条件提取出公共的-->
     <sql id="Example_Where_Clause">
         <where>
-            <if test="person.id != null and id !=0">
+            <if test="person.id != null and person.id !=0">
                 and id = #{person.id}
             </if>
 
-            <if test="name != null and name != ''">
-                and name = #{name}
+            <if test="person.name != null and person.name != ''">
+                and name LIKE CONCAT('%', #{person.name} ,'%')
             </if>
 
-            <if test="age != null and age != 0">
-                and age = #{age}
+            <if test="person.age != null and person.age != 0">
+                and age = #{person.age}
             </if>
 
-            <if test="profession != null and profession != ''">
-                and profession = #{profession}
+            <if test="person.profession != null and person.profession != ''">
+                and profession = #{person.profession}
             </if>
 
-            <if test="hobby != null and hobby != ''">
-                and hobby = #{hobby}
+            <if test="person.hobby != null and person.hobby != ''">
+                and hobby = #{person.hobby}
             </if>
 
-            <if test="salary != null and salary != 0">
-                and salary = #{salary}
-            </if>
-
-            <if test="creat_at != null">
-                and to_days(create_at) = to_days(#{create_at})
-            </if>
-            <if test="update_at != null">
-                and to_days(update_time) = to_days(#{update_at})
+            <if test="person.salary != null and person.salary != 0">
+                and salary = #{person.salary}
             </if>
         </where>
     </sql>
@@ -64,7 +57,9 @@
         <include refid="Base_Column_List"/>
         from person
         <include refid="Example_Where_Clause"/>
-        limit ${size} offset ${(page-1)*size}
+        <if test="beginSize != null or size != null">
+            limit #{beginSize}, #{size}
+        </if>
     </select>
     <!--添加-->
     <insert id="insertEntity" parameterType="com.honey.bank.backstage.entity.Person">

@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserMapper {
     User selectByPrimaryKey(@Param("id") Long id);
 
-    List<User> findAllPage(@Param("page") Integer page, @Param("size") Integer size, User user);
+    List<User> findAllPage(@Param("page") Integer page, @Param("size") Integer size,@Param("user") User user);
 
     int insertEntity(User user);
 
