@@ -64,6 +64,12 @@ public class PersonController {
         }
     }
 
+    /**
+     * 根据id删除
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping
     public int delete(Long id) {
         return personService.delete(id);
