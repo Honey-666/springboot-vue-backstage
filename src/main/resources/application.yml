@@ -3,7 +3,7 @@ server:
 #datasource
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.NonRegisteringDriver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
     url: jdbc:mysql://47.242.205.45:3306/backstage?useSSL=false&&serverTimezone=GMT%2B8
