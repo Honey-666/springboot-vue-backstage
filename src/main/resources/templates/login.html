@@ -3,26 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
-    <script type="text/javascript" src="../static/js/vue.min.js"></script>
+    <script type="text/javascript" src="../../js/vue.min.js"></script>
+    <script type="text/javascript" src="../../js/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
-<h1>login</h1>
-</body>
+<!--详细的看element官网参数详解-->
+<!--详细的看element官网参数详解-->
+<!--详细的看element官网参数详解-->
 <div id="app">
-    {{message}}
-    <br/>
-    <input v-model="message"/>
-    <span>{{message}}</span>
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="600px" class="demo-ruleForm">
+        <!--        prop:绑定属性，一定要写在el-form-item标签内-->
+        <el-form-item label="用户名" prop="username">
+            <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+            <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="submitForm()">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+    </el-form>
 </div>
-
-<script type="text/javascript">
+</body>
+<script>
     new Vue({
         el: '#app',
-        data: {
-            message: 'hello world'
+        data() {
+            //验证输入框有没有参数
+            const validateUsername = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入用户名'));
+                } else {
+                    callback();
+                }
+            };
+            //验证输入框有没有参数
+            const validatePassword = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入密码'));
+                }
+            };
+            return {
+                ruleForm: {
+                    username: '',
+                    password: ''
+                },
+                //定义验证规则
+                rules: {
+                    username: [
+                        {validator: validateUsername, trigger: 'blur'}
+                    ],
+                    password: [
+                        {validator: validatePassword, trigger: 'blur'}
+                    ]
+                }
+            };
+        },
+        methods: {
+            submitForm() {
+                //发送请求
+                axios.get('/user/check', {
+                    params: {
+                        //定义参数
+                        username: this.ruleForm.username,
+                        password: this.ruleForm.password
+                    }
+                }).then(() => {  //成功回调
+                    this.$message.success('登陆成功！');
+                }).catch(() => { //失败回调
+                    this.$message.success('账号或密码错误');
+                    return false;
+                })
+            },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            }
         }
     })
-</script>
 
+</script>
 </html>

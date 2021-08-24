@@ -3,6 +3,7 @@ package com.honey.bank.backstage.mapper;
 import com.honey.bank.backstage.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface UserMapper {
     int updateByPrimaryKey(User user);
 
     int deleteByPrimaryKey(@Param("id") Long id);
+
+    @Select("select * from user where username=#{username} and password=#{password}")
+    User findOneByUsernameAndPasswordUser(@Param("username")String username,@Param("password")String password);
 }
