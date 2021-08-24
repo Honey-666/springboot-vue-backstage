@@ -1,5 +1,6 @@
 server:
   port: 19999
+
 #datasource
 spring:
   datasource:
@@ -10,6 +11,14 @@ spring:
     hikari:
       maximum-pool-size: 5
       minimum-idle: 2
+
+
+
+  application:
+    name: backstage-vue
+
+
+
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
