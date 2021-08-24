@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="pattern" value="%d %p [%t] [%c{0}] [%M] - %m%n" />
+	<property name="filePath" value="logs" />
+	
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${pattern}</Pattern>
+        </encoder>
+    </appender>
+
+     <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${filePath}/std.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${filePath}/%d{yyyy-MM-dd}.std.log</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${pattern}</Pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="dailyRollingFileAppenderError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${filePath}/error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${filePath}/%d{yyyy-MM-dd}.error.log</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>${pattern}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+    </appender>
+ 	<!-- show sql log -->
+   <!--	<logger name="com.bigbigwork.board.mapper">
+		<level value="info"/>
+	</logger>-->
+
+    <root>
+         <level value="info"/>
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="dailyRollingFileAppender"/>
+        <appender-ref ref="dailyRollingFileAppenderError"/>
+    </root>
+</configuration>
