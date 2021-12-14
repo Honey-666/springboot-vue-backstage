@@ -1,7 +1,16 @@
 package com.honey.bank.backstage.service;
 
-import org.springframework.stereotype.Service;
+import com.honey.bank.backstage.pojo.User;
+import com.baomidou.mybatisplus.extension.service.IService;
 
-@Service
-public class UserService {
+/**
+ * <p>
+ *  服务类
+ * </p>
+ *
+ * @author bank
+ * @since 2021-12-11
+ */
+public interface UserService extends IService<User> {
+
 }

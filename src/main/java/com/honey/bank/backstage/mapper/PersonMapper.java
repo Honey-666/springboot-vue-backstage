@@ -1,21 +1,16 @@
 package com.honey.bank.backstage.mapper;
 
-import com.honey.bank.backstage.entity.Person;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.honey.bank.backstage.pojo.Person;
 
-import java.util.List;
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author bank
+ * @since 2021-12-11
+ */
+public interface PersonMapper extends BaseMapper<Person> {
 
-@Mapper
-public interface PersonMapper {
-
-    Person selectByPrimaryKey(@Param("id") Long id);
-
-    List<Person> findAllPage(@Param("beginSize") Integer beginSize, @Param("size") Integer size,@Param("person") Person person);
-
-    int insertEntity(Person person);
-
-    int updateByPrimaryKey(Person person);
-
-    int deleteByPrimaryKey(@Param("id") Long id);
 }

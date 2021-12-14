@@ -1,120 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.honey.bank.backstage.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com.honey.bank.backstage.entity.User">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.honey.bank.backstage.pojo.User">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="salt" property="salt"/>
-        <result column="creat_at" property="creat_at"/>
-        <result column="update_at" property="update_at"/>
+        <result column="create_at" property="createAt"/>
+        <result column="update_at" property="updateAt"/>
     </resultMap>
-    <!--    要查询的列，提取出公共的-->
-    <sql id="Base_Column_List">
-        id
-        ,username,password,salt,creat_at,update_at
-    </sql>
-    <!--    条件提取出公共的-->
-    <sql id="Example_Where_Clause">
-        <where>
-            <if test="user.id != null">
-                and id = #{user.id}
-            </if>
-
-            <if test="user.username != null and user.username != ''">
-                and username = #{user.username}
-            </if>
-
-            <if test="user.password != null and user.password != ''">
-                and password = #{user.password}
-            </if>
-
-            <if test="user.salt != null and user.salt != ''">
-                and salt = #{user.salt}
-            </if>
-        </where>
-    </sql>
-    <!--根据主键查询一个-->
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from user
-        where id = #{id}
-    </select>
-    <!--分页查询-->
-    <select id="findAllPage" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from user
-        limit #{page},#{size}
-    </select>
-
-    <insert id="insertEntity" parameterType="com.honey.bank.backstage.entity.User">
-        insert into user
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="username != null">
-                username,
-            </if>
-            <if test="password != null">
-                password,
-            </if>
-            <if test="salt != null">
-                salt,
-            </if>
-            <if test="creat_at != null">
-                creat_at,
-            </if>
-            <if test="update_at != null">
-                update_at,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="username != null">
-                #{username},
-            </if>
-            <if test="password != null">
-                #{password},
-            </if>
-            <if test="salt != null">
-                #{salt},
-            </if>
-            <if test="creat_at != null">
-                #{creat_at},
-            </if>
-            <if test="update_at != null">
-                #{update_at},
-            </if>
-        </trim>
-    </insert>
-
-    <update id="updateByPrimaryKey" parameterType="com.honey.bank.backstage.entity.User">
-        update user
-        <set>
-            <if test="username != null">
-                username = #{username},
-            </if>
-            <if test="password != null">
-                password = #{password},
-            </if>
-            <if test="salt != null">
-                salt = #{salt},
-            </if>
-            <if test="creat_at != null">
-                creat_at = #{creat_at},
-            </if>
-            <if test="update_at != null">
-                update_at = #{update_at},
-            </if>
-        </set>
-        where
-        id = #{id}
-    </update>
-
-    <delete id="deleteByPrimaryKey">
-        delete
-        from user
-        where id = #{id}
-    </delete>
 
 </mapper>

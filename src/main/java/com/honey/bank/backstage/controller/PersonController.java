@@ -1,77 +1,56 @@
 package com.honey.bank.backstage.controller;
 
-import com.honey.bank.backstage.entity.Person;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.honey.bank.backstage.pojo.Person;
 import com.honey.bank.backstage.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * <p>
+ * 前端控制器
+ * </p>
+ *
+ * @author bank
+ * @since 2021-12-11
+ */
 @RestController
 @RequestMapping("/person")
-public class PersonController extends BaseController{
+public class PersonController {
     @Autowired
     private PersonService personService;
 
-    /**
-     * 根据条件查所有，带分页
-     *
-     * @param page
-     * @param size
-     * @param person
-     * @return
-     */
-    @RequestMapping("list")
-    public List<Person> findAll(Integer page, Integer size, Person person) {
-        if (page == null) {
-            page = 1;
-        }
-        if (size == null) {
-            size = 10;
-        }
-        //计算分页从哪里开始
-        Integer beginSize = (page - 1) * size;
-        return personService.findAll(beginSize, size, person);
+    @GetMapping("/list")
+    public List<Person> PersonList(Person person) {
+
+        //第一个为页数，第二个为显示条数
+        IPage<Person> page = new Page<>(person.getPageNumber(), person.getSize());
+        return personService.page(page, new QueryWrapper<Person>(person)).getRecords();
     }
 
-    /**
-     * 查询一个
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping("/find_one")
-    public Person findOneById(Long id) {
-        return personService.findOneById(id);
+    @GetMapping("/one")
+    public Person getOne(Long id) {
+        return personService.getById(id);
     }
 
-    /**
-     * 保存或者修改
-     *
-     * @param person
-     * @return
-     */
-    @RequestMapping("save_or_update")
-    public int saveOrUpdate(Person person) {
-        Long id = person.getId();
-        if (id == null) {
-            //增加
+    @PostMapping("/save_or_edit")
+    public boolean saveOrEdit(Person person) {
+        if (Objects.isNull(person.getId())) {
             return personService.save(person);
         } else {
-            //修改
-            return personService.update(person);
+            return personService.updateById(person);
         }
     }
 
-    /**
-     * 根据id删除
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping
-    public int delete(Long id) {
-        return personService.delete(id);
+    @DeleteMapping("/delete")
+    public boolean delete(Long id) {
+        return personService.removeById(id);
     }
+
 }

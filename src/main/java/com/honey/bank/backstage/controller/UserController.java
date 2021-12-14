@@ -1,40 +1,54 @@
 package com.honey.bank.backstage.controller;
 
-import com.honey.bank.backstage.entity.User;
-import com.honey.bank.backstage.mapper.UserMapper;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.honey.bank.backstage.pojo.User;
+import com.honey.bank.backstage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Objects;
 
-@Controller
+/**
+ * <p>
+ * 前端控制器
+ * </p>
+ *
+ * @author bank
+ * @since 2021-12-11
+ */
+@RestController
 @RequestMapping("/user")
-public class UserController extends BaseController {
+public class UserController {
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
-    @RequestMapping("login")
-    public String login() {
-        return "login";
+    @GetMapping("/list")
+    public List<User> userList(User user) {
+        //第一个为页数，第二个为显示条数
+        IPage<User> page = new Page<>(user.getPageNumber(), user.getSize());
+        return userService.page(page, new QueryWrapper<User>(user)).getRecords();
     }
 
-    @GetMapping("check")
-    public String check(String username, String password, HttpServletRequest request) {
-        LOG.info("username:{}",username);
-        LOG.info("password:{}",password);
-        User user = userMapper.findOneByUsernameAndPasswordUser(username, password);
-        if (user == null) {
-            //没有这个用户
-            return "redirect:/user/login";
-        }
-        //将用户信息放入session中
-        HttpSession session = request.getSession();
-        session.setAttribute("user", user.getId());
+    @GetMapping("/one")
+    public User getOne(Long id) {
+        return userService.getById(id);
+    }
 
-        //TODO:跳转到查询页面
-        return "";
+    @PostMapping("/save_or_edit")
+    public boolean saveOrEdit(User user) {
+        if (Objects.isNull(user.getId())) {
+            return userService.save(user);
+        } else {
+            return userService.updateById(user);
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public boolean delete(Long id) {
+        return userService.removeById(id);
     }
 }

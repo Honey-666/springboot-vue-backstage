@@ -1,150 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.honey.bank.backstage.mapper.PersonMapper">
 
-    <resultMap id="BaseResultMap" type="com.honey.bank.backstage.entity.Person">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="age" property="age"/>
-        <result column="profession" property="profession"/>
-        <result column="hobby" property="hobby"/>
-        <result column="salary" property="salary"/>
-        <result column="creat_at" property="creat_at"/>
-        <result column="update_at" property="update_at"/>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.honey.bank.backstage.pojo.Person">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="age" property="age" />
+        <result column="profession" property="profession" />
+        <result column="hobby" property="hobby" />
+        <result column="salary" property="salary" />
+        <result column="creat_at" property="createAt" />
+        <result column="update_at" property="updateAt" />
     </resultMap>
-    <!--    要查询的列，提取出公共的-->
-    <sql id="Base_Column_List">
-        id,name,age,profession,hobby,salary,creat_at,update_at
-    </sql>
-    <!--    条件提取出公共的-->
-    <sql id="Example_Where_Clause">
-        <where>
-            <if test="person.id != null and person.id !=0">
-                and id = #{person.id}
-            </if>
 
-            <if test="person.name != null and person.name != ''">
-                and name LIKE CONCAT('%', #{person.name} ,'%')
-            </if>
-
-            <if test="person.age != null and person.age != 0">
-                and age = #{person.age}
-            </if>
-
-            <if test="person.profession != null and person.profession != ''">
-                and profession = #{person.profession}
-            </if>
-
-            <if test="person.hobby != null and person.hobby != ''">
-                and hobby = #{person.hobby}
-            </if>
-
-            <if test="person.salary != null and person.salary != 0">
-                and salary = #{person.salary}
-            </if>
-        </where>
-    </sql>
-    <!--根据主键查询一个-->
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from person
-        where id = #{id}
-    </select>
-    <!--分页查询-->
-    <select id="findAllPage" resultMap="BaseResultMap" parameterType="com.honey.bank.backstage.entity.Person">
-        select
-        <include refid="Base_Column_List"/>
-        from person
-        <include refid="Example_Where_Clause"/>
-        <if test="beginSize != null or size != null">
-            limit #{beginSize}, #{size}
-        </if>
-    </select>
-    <!--添加-->
-    <insert id="insertEntity" parameterType="com.honey.bank.backstage.entity.Person">
-        insert into person
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null">
-                name,
-            </if>
-            <if test="age != null">
-                age,
-            </if>
-            <if test="profession != null">
-                profession,
-            </if>
-            <if test="hobby != null">
-                hobby,
-            </if>
-            <if test="salary != null">
-                salary,
-            </if>
-            <if test="creat_at != null">
-                creat_at,
-            </if>
-            <if test="update_at != null">
-                update_at,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null">
-                #{name},
-            </if>
-            <if test="age != null">
-                #{age},
-            </if>
-            <if test="profession != null">
-                #{profession},
-            </if>
-            <if test="hobby != null">
-                #{hobby},
-            </if>
-            <if test="salary != null">
-                #{salary},
-            </if>
-            <if test="creat_at != null">
-                #{creat_at},
-            </if>
-            <if test="update_at != null">
-                #{update_at},
-            </if>
-        </trim>
-    </insert>
-    <!--修改-->
-    <update id="updateByPrimaryKey" parameterType="com.honey.bank.backstage.entity.Person">
-        update person
-        <set>
-            <if test="name != null">
-                name = #{name},
-            </if>
-            <if test="age != null">
-                age = #{age},
-            </if>
-            <if test="profession != null">
-                profession = #{profession},
-            </if>
-            <if test="hobby != null">
-                hobby = #{hobby},
-            </if>
-            <if test="salary != null">
-                salary = #{salary},
-            </if>
-
-            <if test="creat_at != null">
-                creat_at = #{creat_at},
-            </if>
-            <if test="update_at != null">
-                update_at = #{update_at},
-            </if>
-        </set>
-        where
-        id = #{id}
-    </update>
-    <!--删除-->
-    <delete id="deleteByPrimaryKey">
-        delete
-        from person
-        where id = #{id}
-    </delete>
 </mapper>
