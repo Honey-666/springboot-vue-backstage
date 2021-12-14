@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<property name="pattern" value="%d %p [%t] [%c{0}] [%M] - %m%n" />
-	<property name="filePath" value="logs" />
+<!--	<property name="pattern" value="%d %p [%t] [%c{0}] [%M] - %m%n" />-->
+    <property name="pattern"
+              value="%blue(%date{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %green([%thread]) %boldMagenta(%logger{50}) %cyan(%msg%n)"/>
+
+    <property name="filePath" value="logs" />
 	
     <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

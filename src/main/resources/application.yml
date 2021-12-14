@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/backstage?useSSL=false&&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/backstage?useSSL=false&serverTimezone=GMT%2B8
     hikari:
       maximum-pool-size: 5
       minimum-idle: 2
@@ -16,11 +16,22 @@ spring:
 
   application:
     name: backstage-vue
+    #打印彩色日志
+  output:
+    ansi:
+      enabled: always
 
 
 
-mybatis:
+#mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  mapper-locations: classpath:com/honey/bank/backstage/mapper/xml/*.xml
+
+mybatis-plus:
+#  config-location: classpath:com/honey/bank/backstage/mapper/xml/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:com/honey/bank/backstage/mapper/xml/*.xml
+
 
